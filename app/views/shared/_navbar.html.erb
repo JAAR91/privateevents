@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <%= link_to 'Events', root_path, class:'nav-link fs-4 text-dark' %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <%= link_to 'Home', root_path, class:'nav-link text-dark' %>
+        </li>
+        <% nav_bar_links.each do |nav_links| %>
+          <li class="nav-item">
+              <%= nav_links%>
+          </li>
+        <%end%>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <%= user_name(current_user) %>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+             <% user_session(logged_in?).each do |session| %>
+              <li>
+                <%= session %>
+              </li>
+             <%end%>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

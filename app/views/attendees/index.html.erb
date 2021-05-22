@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-8">
+            <div class="container py-2 my-1 text-center">
+                <p>Here are all the invitations you got, <%= @user.name %></p>
+                <%= link_to 'See upcoming events', user_attendees_path(current_user.id, :time_spec => 'future'), class:'link-success mx-2'%>
+                <%= link_to 'See past events', user_attendees_path(current_user.id, :time_spec => 'past'), class:'link-dark mx-2'%>
+            </div>
+            <div class="list-group">
+                <% @attendees.each do |attendee| %>
+                    <div class="list-group-item list-group-item-action <%= list_group_color(attendee) %>">
+                            <div class="m-1 d-flex justify-content-between border-bottom">
+                                <p><%= link_to attendee.event.title, event_path(attendee.event.id), class:'text-decoration-none text-uppercase' %></p>
+                                <p><%= attedees_count(attendee.event) %>/<%= attendee.event.tpeople %></p>
+                                <p class="text-muted"><%= attendee.event.date %></p>
+                            </div>
+                            <div class="m-1 d-flex justify-content-between">
+                                <p>Status: <%= attendee.status %></p>
+                                <p>Organize by: <%= attendee.event.user.username %></p>
+                            </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-2">
+
+        </div>
+    </div>
+</div>

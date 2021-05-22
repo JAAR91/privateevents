@@ -1,0 +1,12 @@
+<div class="border border-3 rounded-3 p-1 bg-light my-1">
+    <p class="mx-auto text-center">Invitations sent</p>
+    <% @event.attendees.order('status ASC').each do |attendees| %>
+        <div class="d-flex justify-content-around">
+            <p><%= attendees.user.username %></p>
+            <p><%= attendees.status %></p>
+            <%= link_to 'Delete', user_event_attendee_path(attendees.user_id, attendees.event_id, attendees.id),
+                    method: :delete, data: { confirm: 'Are you sure?' },
+                    class: 'link-danger mx-2 text-decoration-none' %>
+        </div>
+    <% end %>
+</div>

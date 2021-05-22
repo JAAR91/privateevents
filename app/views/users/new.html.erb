@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-3">
+            <h1>New Users Page</h1>
+            <%= form_with model: @user do |f| %>
+                <%= f.label 'Name', class: "my-2" %>
+                <%= f.text_field :name, class: "form-control" %>
+                <%= f.label 'Username', class: "my-2" %>
+                <%= f.text_field :username, class: "form-control" %>
+                <%= f.submit 'Create New Account', class:"btn btn-primary my-2" %> <%= link_to 'Login',login_path%>
+            <% end %>
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+</div>
