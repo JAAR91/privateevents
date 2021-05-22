@@ -3,7 +3,7 @@
 
 ### Private Events
 
-## This project is a events page, that allows you to create events and send invitation to other users using the person username, every one have the change to see theirs event invitations using the links on the navigation bar on top, also its possible to filter only the events you have created. On the invitations page, you can also see all the events you been invited and filter then by future events or previous events. People need to be logged in to do any changes, the post have the option to edit or delete, and on each post you can see the people you have invited your event, but make sure not to send to much invitations because each event have a maximun amount of people and once that is fill, no more invitations can be accepted.
+## This project is an events page, that allows you to create events and send invitations to other users using the person username, everyone has the chance to see their event invitations using the links on the navigation bar on top, also it's possible to filter only the events you have created. On the invitations page, you can also see all the events you have been invited to and filter them by future events or previous events. People need to be logged in to do any changes, the post has the option to edit or delete, and on each post you can see the people you have invited to your event, but make sure not to send too many invitations because each event have a maximum amount of people and once that is fill, no more invitations can be accepted.
 
 
 ### Prerequisites
