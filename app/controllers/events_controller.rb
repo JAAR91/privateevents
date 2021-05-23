@@ -5,29 +5,45 @@ class EventsController < ApplicationController
     if params[:user_id].nil?
       case params[:time_filter]
       when nil
-        @events = Event.all.order('date DESC')
+        @events = Event.all
       when 'all'
-        @events = Event.all.order('date DESC')
+        @events = Event.all
       when 'future'
-        @events = Event.select { |item| !item.date.nil? && item.date > Time.now }.sort
+        @events = show_upcoming
       when 'past'
-        @events = Event.select { |item| !item.date.nil? && item.date < Time.now }.sort
+        @events = show_past
       end
     else
       @user = User.find(params[:user_id])
-      @events = @user.events
       case params[:time_filter]
       when nil
-        @events = @user.events.order('date DESC')
+        @events = @user.events
       when 'all'
-        @events = @user.events.order('date DESC')
+        @events = @user.events
       when 'future'
-        @events = @user.events.select { |item| !item.date.nil? && item.date > Time.now }.sort
+        @events = show_upcoming(@user)
       when 'past'
-        @events = @user.events.select { |item| !item.date.nil? && item.date < Time.now }.sort
+        @events = show_past(@user)
       end
     end
-    #@events.order('date DESC') if @events.count > 1
+  end
+
+  def show_upcoming(user = nil)
+    if user.nil?
+      @upcoming_events = Event.upcoming_events
+    else
+      @upcoming_events = user.events.upcoming_events
+    end
+    @upcoming_events
+  end
+
+  def show_past(user = nil)
+    if user.nil?
+      @past_events = Event.past_events
+    else
+      @past_events = user.events.past_events
+    end
+    @past_events
   end
 
   def new
