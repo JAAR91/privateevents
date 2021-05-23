@@ -40,6 +40,7 @@
             <% invitations_owner_check(@event).each do |checked|%>
                 <%= checked %>
             <%end%>
+            <%= render('attendees/invitations') %>
         </div>
         <div class="col-3">
         </div>

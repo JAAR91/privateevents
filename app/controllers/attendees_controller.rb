@@ -3,13 +3,14 @@ class AttendeesController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
+
     case params[:time_spec]
-    when 'normal'
+    when 'all'
       @attendees = @user.attendees
     when 'future'
-      @attendees = @user.attendees.select { |item| item.event.date > Time.now }
+      @attendees = @user.attendees.all.joins(:event).where('date >= ?', Date.today)
     when 'past'
-      @attendees = @user.attendees.select { |item| item.event.date < Time.now }
+      @attendees = @user.attendees.all.joins(:event).where('date < ?', Date.today)
     end
   end
 

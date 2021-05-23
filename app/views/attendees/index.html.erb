@@ -6,10 +6,7 @@
         <div class="col-8">
             <div class="container py-2 my-1 text-center">
                 <% invitations_top(@attendees).each do |top_links| %>
-                    <p class=<%=top_links[1]%> >
-                        <%= top_links[0] %>
-                        <%=top_links[1]%>
-                    </p>
+                        <%= top_links %>
                 <%end%>
             </div>
             <div class="list-group">

@@ -3,46 +3,40 @@ class EventsController < ApplicationController
 
   def index
     if params[:user_id].nil?
-      case params[:time_filter]
-      when nil
-        @events = Event.all
-      when 'all'
-        @events = Event.all
-      when 'future'
-        @events = show_upcoming
-      when 'past'
-        @events = show_past
-      end
+      @events = event_index_conditional(nil)
     else
       @user = User.find(params[:user_id])
-      case params[:time_filter]
-      when nil
-        @events = @user.events
-      when 'all'
-        @events = @user.events
-      when 'future'
-        @events = show_upcoming(@user)
-      when 'past'
-        @events = show_past(@user)
-      end
+      @events = event_index_conditional(@user)
+    end
+  end
+
+  def event_index_conditional(user)
+    if params[:time_filter].nil? || params[:time_filter] == 'all'
+      return Event.all if user.nil?
+
+      @user.events
+    elsif params[:time_filter] == 'future'
+      show_upcoming(user)
+    elsif params[:time_filter] == 'past'
+      show_past(user)
     end
   end
 
   def show_upcoming(user = nil)
-    if user.nil?
-      @upcoming_events = Event.upcoming_events
-    else
-      @upcoming_events = user.events.upcoming_events
-    end
+    @upcoming_events = if user.nil?
+                         Event.upcoming_events
+                       else
+                         user.events.upcoming_events
+                       end
     @upcoming_events
   end
 
   def show_past(user = nil)
-    if user.nil?
-      @past_events = Event.past_events
-    else
-      @past_events = user.events.past_events
-    end
+    @past_events = if user.nil?
+                     Event.past_events
+                   else
+                     user.events.past_events
+                   end
     @past_events
   end
 
