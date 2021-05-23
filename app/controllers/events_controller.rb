@@ -3,11 +3,31 @@ class EventsController < ApplicationController
 
   def index
     if params[:user_id].nil?
-      @events = Event.all
+      case params[:time_filter]
+      when nil
+        @events = Event.all.order('date DESC')
+      when 'all'
+        @events = Event.all.order('date DESC')
+      when 'future'
+        @events = Event.select { |item| !item.date.nil? && item.date > Time.now }.sort
+      when 'past'
+        @events = Event.select { |item| !item.date.nil? && item.date < Time.now }.sort
+      end
     else
       @user = User.find(params[:user_id])
       @events = @user.events
+      case params[:time_filter]
+      when nil
+        @events = @user.events.order('date DESC')
+      when 'all'
+        @events = @user.events.order('date DESC')
+      when 'future'
+        @events = @user.events.select { |item| !item.date.nil? && item.date > Time.now }.sort
+      when 'past'
+        @events = @user.events.select { |item| !item.date.nil? && item.date < Time.now }.sort
+      end
     end
+    #@events.order('date DESC') if @events.count > 1
   end
 
   def new

@@ -7,7 +7,17 @@
             <div class="container py-2 my-1 text-center">
                 <%= event_post(current_user) %>
             </div>
-            <% @events.order('date DESC').each do |event| %>
+            <div class="border border-3 rounded py-2 my-1 bg-light">
+                <div class="d-flex justify-content-around mb-3">
+                    <% time_filter_links(@events).each do |filter_links|%>
+                        <%= filter_links %>
+                    <%end%>
+                </div>
+                <div class="text-center text-muted">
+                    <%= when_events_zero(@events) %>
+                </div>
+            </div>
+            <% @events.each do |event| %>
                 <div class="border border-3 rounded p-4 bg-light my-1">
                     <div class="d-flex justify-content-center">
                     <p class="text-uppercase text-center"> <%= event_title(logged_in?, event) %></p>

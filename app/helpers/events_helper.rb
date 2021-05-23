@@ -10,14 +10,16 @@ module EventsHelper
   end
 
   def event_date_status(event)
+    return if event.date.nil?
     if event.date.future?
       '(Upcoming Event)'
     else
-      '(Previous Event)'
+      '(Event ended)'
     end
   end
 
   def date_color_status(event)
+    return if event.date.nil?
     if event.date.future?
       'link-success'
     else
@@ -37,6 +39,7 @@ module EventsHelper
 
   def modify_event(event)
     array = []
+    return [] if !event.date.nil? && !event.date.future?
     if current_user.id == event.user_id
       array[0] = link_to 'Edit',
                          edit_user_event_path(current_user.id, event.id),
@@ -72,11 +75,35 @@ module EventsHelper
 
   def nav_bar_links
     array = []
-    array.push(link_to('My Own events', user_events_path(current_user.id), class: 'nav-link text-dark')) if logged_in?
+    array.push(link_to 'My events', root_path(:time_filter => 'all', :user_id=> current_user.id), class:'nav-link text-dark') if logged_in?
+    #array.push(link_to root_path(:time_filter => 'all', :user_id=> current_user.id), class: 'nav-link text-dark') 
     if logged_in?
       array.push(link_to('Invitations', user_attendees_path(current_user.id, time_spec: 'normal'),
                          class: 'nav-link active'))
     end
     array
   end
+
+  def time_filter_links(events)
+    array=[]
+    
+    if params[:user_id].nil?
+      array.push(link_to 'All events', root_path(:time_filter => 'all'), class:'link-primary mx-2')
+      array.push(link_to 'Future Events', root_path(:time_filter => 'future'), class:'link-success mx-2')
+      array.push(link_to 'Past Events', root_path(:time_filter => 'past'), class:'link-dark mx-2')
+    else
+      array.push(link_to 'All events', root_path(:time_filter => 'all', :user_id=> current_user.id), class:'link-primary mx-2')
+      array.push(link_to 'Future Events', root_path(:time_filter => 'future', :user_id=> current_user.id), class:'link-success mx-2')
+      array.push(link_to 'Past Events', root_path(:time_filter => 'past', :user_id=> current_user.id), class:'link-dark mx-2')
+    end
+    array
+  end
+
+  def when_events_zero(events)
+    if events.count.zero?
+      return 'No events yet, click on new event to create a new one' if params[:time_filter] == 'future' || params[:time_filter] == 'all'
+      return 'No past events, but click on the button above to create new ones' if params[:time_filter] == 'past'
+    end
+  end
+
 end

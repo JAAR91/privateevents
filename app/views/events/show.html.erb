@@ -6,7 +6,8 @@
             <% status_messages(@event) %>
             <div class="border border-3 rounded p-4 bg-light my-1">
                 <div class="d-flex justify-content-center m-1 border-bottom">
-                    <p class="text-uppercase"> <%= @event.title %> </p>
+                    <p class="text-uppercase"> <%= @event.title %> </p> 
+                    <p class=<%= date_color_status(@event)%> ><%= event_date_status(@event)%></p>
                 </div>
                 <div class="d-flex justify-content-between m-1">
                     <p>Confirmed Assistence: <%= attedees_count(@event) %>/<%= @event.tpeople%></p>

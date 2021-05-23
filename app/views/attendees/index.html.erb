@@ -5,9 +5,12 @@
         </div>
         <div class="col-8">
             <div class="container py-2 my-1 text-center">
-                <p>Here are all the invitations you got, <%= @user.name %></p>
-                <%= link_to 'See upcoming events', user_attendees_path(current_user.id, :time_spec => 'future'), class:'link-success mx-2'%>
-                <%= link_to 'See past events', user_attendees_path(current_user.id, :time_spec => 'past'), class:'link-dark mx-2'%>
+                <% invitations_top(@attendees).each do |top_links| %>
+                    <p class=<%=top_links[1]%> >
+                        <%= top_links[0] %>
+                        <%=top_links[1]%>
+                    </p>
+                <%end%>
             </div>
             <div class="list-group">
                 <% @attendees.each do |attendee| %>
