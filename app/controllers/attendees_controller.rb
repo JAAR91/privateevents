@@ -27,10 +27,10 @@ class AttendeesController < ApplicationController
     1
   end
 
-
   def create
     @user = User.find_by(username: params[:username])
     return if check_params(@user).zero?
+
     @event = Event.find(params[:event_id])
     @attendees = @event.attendees.find_by(user_id: @user.id)
     current_user = User.find(session[:user_id])
