@@ -49,11 +49,12 @@ class EventsController < ApplicationController
     @user = User.find(session[:user_id])
     @event = @user.events.new(event_params)
     if @event.save
-      flash.alert = 'Event created succesfuly!'
+      flash[:notice] = 'Event Created!'
       redirect_to event_path(@event.id)
     else
-      flash.alert = 'Error unable to create the event'
+      flash.now[:notice] = 'Error, all fields need to be filled'
       render :new
+
     end
   end
 

@@ -2,8 +2,8 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(username: params[:username])
     if @user.nil?
-      flash[:notice] = 'That user does not exist.'
       redirect_to login_path
+      flash[:notice] = 'That user does not exist.'
     else
       session[:user_id] = @user.id
       redirect_to root_path

@@ -11,7 +11,8 @@ class UsersController < ApplicationController
       flash[:notice] = "Welcome, #{@user.name}."
       redirect_to root_path
     else
-      render :new
+      redirect_to new_user_path
+      flash[:notice] = 'That username is already taken'
     end
   end
 

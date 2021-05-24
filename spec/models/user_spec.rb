@@ -5,13 +5,13 @@ RSpec.describe User, type: :model do
     let(:name) { 'simple name' }
 
     it 'user is valid if it has name' do
-      user = User.create(name: 'username')
+      user = User.create(name: 'name', username: 'username')
       expect(user).to be_valid
     end
 
     it 'user is not valid if name is not present' do
       user = User.create
-      expect(user).to_not be_nil
+      expect(user).not_to be_nil
     end
   end
 end
