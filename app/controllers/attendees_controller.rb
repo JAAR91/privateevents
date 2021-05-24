@@ -14,26 +14,27 @@ class AttendeesController < ApplicationController
     end
   end
 
-  def check_params
+  def check_params(user)
     if params[:username] == ''
       redirect_to event_path(params[:event_id])
       flash[:notice] = 'Please enter a username'
+      return 0
+    elsif user.nil?
+      redirect_to event_path(params[:event_id])
+      flash[:notice] = 'That user does not exist'
       return 0
     end
     1
   end
 
-  def create
-    return if check_params.zero?
 
+  def create
     @user = User.find_by(username: params[:username])
+    return if check_params(@user).zero?
     @event = Event.find(params[:event_id])
     @attendees = @event.attendees.find_by(user_id: @user.id)
     current_user = User.find(session[:user_id])
-    if @user.nil?
-      redirect_to event_path(@event.id)
-      flash[:notice] = 'That user does not exist.'
-    elsif params[:username] == current_user.username
+    if params[:username] == current_user.username
       redirect_to event_path(@event.id)
       flash[:notice] = 'Thats yourself!!'
     elsif @attendees.nil? || @attendees.status == 'canceled'
