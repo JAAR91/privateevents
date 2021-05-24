@@ -65,7 +65,7 @@ module AttendeesHelper
   end
 
   def invites_checker(event)
-    if event.user_id == current_user.id
+    if event.creator_id == current_user.id
       event.attendees
     else
       event.attendees.where(status: 'accepted')
@@ -73,7 +73,7 @@ module AttendeesHelper
   end
 
   def attendees_del_link(event, attendees)
-    if event.user_id == current_user.id
+    if event.creator_id == current_user.id
       return link_to 'Delete', user_event_attendee_path(attendees.user_id, attendees.event_id, attendees.id),
                      method: :delete, data: { confirm: 'Are you sure?' },
                      class: 'link-danger mx-2 text-decoration-none'
@@ -82,14 +82,14 @@ module AttendeesHelper
   end
 
   def attendees_background_color(event, attendees)
-    return if event.user_id != current_user.id
+    return if event.creator_id != current_user.id
     return 'list-group-item-success' if attendees.status == 'accepted'
     return 'list-group-item-warning' if attendees.status == 'declined'
     return 'list-group-item-danger' if attendees.status == 'canceled' || attendees.status == 'canceledfull'
   end
 
   def attendees_title(event)
-    if event.user_id == current_user.id
+    if event.creator_id == current_user.id
       if event.attendees.count.zero?
         'No invitations sent for this event'
       else

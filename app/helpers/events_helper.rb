@@ -43,7 +43,7 @@ module EventsHelper
     array = []
     return [] if !event.date.nil? && !event.date.future?
 
-    if current_user.id == event.user_id
+    if current_user.id == event.creator_id
       array[0] = link_to 'Edit',
                          edit_user_event_path(current_user.id, event.id),
                          class: 'mx-2 text-decoration-none link-primary'
@@ -85,9 +85,9 @@ module EventsHelper
 
   def invitations_owner_check(event)
     array = []
-    return array if future_event?(event.date)
+    return array if !event.date.future?
 
-    array.push(render('attendees/inviteform')) if session[:user_id] == event.user_id
+    array.push(render('attendees/inviteform')) if session[:user_id] == event.creator_id
     invitation = event.attendees.find_by(user_id: session[:user_id])
     if event.tpeople != event.attendees.where(status: 'accepted').count && !invitation.nil?
       if invitation.status == 'pending'
@@ -102,8 +102,8 @@ module EventsHelper
     array
   end
 
-  def future_event?(_date)
-    return true if !event.date.nil? && event.date.future?
+  def future_event?(date)
+    return true if !date.nil? && date.future?
 
     false
   end

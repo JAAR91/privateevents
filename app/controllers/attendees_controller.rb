@@ -6,15 +6,20 @@ class AttendeesController < ApplicationController
 
     case params[:time_spec]
     when 'all'
-      @attendees = @user.attendees
+      @attendees = @user.attendees.order('created_at DESC')
     when 'future'
-      @attendees = @user.attendees.all.joins(:event).where('date >= ?', Date.today)
+      @attendees = @user.attendees.all.joins(:event).where('date >= ?', Date.today).order('created_at DESC')
     when 'past'
-      @attendees = @user.attendees.all.joins(:event).where('date < ?', Date.today)
+      @attendees = @user.attendees.all.joins(:event).where('date < ?', Date.today).order('created_at DESC')
     end
   end
 
   def create
+    if params[:username] == ''
+      redirect_to event_path(params[:event_id])
+      flash[:notice] = 'Please enter a username'
+      return
+    end
     @user = User.find_by(username: params[:username])
     @event = Event.find(params[:event_id])
     @attendees = @event.attendees.find_by(user_id: @user.id)
