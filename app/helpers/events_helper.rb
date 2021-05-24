@@ -85,7 +85,7 @@ module EventsHelper
 
   def invitations_owner_check(event)
     array = []
-    return array if !event.date.future?
+    return array unless event.date.future?
 
     array.push(render('attendees/inviteform')) if session[:user_id] == event.creator_id
     invitation = event.attendees.find_by(user_id: session[:user_id])

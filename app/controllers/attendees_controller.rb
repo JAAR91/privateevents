@@ -14,12 +14,18 @@ class AttendeesController < ApplicationController
     end
   end
 
-  def create
+  def check_params
     if params[:username] == ''
       redirect_to event_path(params[:event_id])
       flash[:notice] = 'Please enter a username'
-      return
+      return 0
     end
+    1
+  end
+
+  def create
+    return if check_params.zero?
+
     @user = User.find_by(username: params[:username])
     @event = Event.find(params[:event_id])
     @attendees = @event.attendees.find_by(user_id: @user.id)

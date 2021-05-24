@@ -50,7 +50,7 @@ class EventsController < ApplicationController
     @event = @user.events.new(event_params)
     if @event.save
       flash.alert = 'Event created succesfuly!'
-      redirect_to root_path
+      redirect_to event_path(@event.id)
     else
       flash.alert = 'Error unable to create the event'
       render :new
