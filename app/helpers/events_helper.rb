@@ -57,19 +57,9 @@ module EventsHelper
 
   def time_filter_links(_events)
     array = []
-
-    if params[:user_id].nil?
-      array.push(link_to('All events', root_path(time_filter: 'all'), class: 'link-primary mx-2'))
-      array.push(link_to('Future Events', root_path(time_filter: 'future'), class: 'link-success mx-2'))
-      array.push(link_to('Past Events', root_path(time_filter: 'past'), class: 'link-dark mx-2'))
-    else
-      array.push(link_to('All events', root_path(time_filter: 'all', user_id: current_user.id),
-                         class: 'link-primary mx-2'))
-      array.push(link_to('Future Events', root_path(time_filter: 'future', user_id: current_user.id),
-                         class: 'link-success mx-2'))
-      array.push(link_to('Past Events', root_path(time_filter: 'past', user_id: current_user.id),
-                         class: 'link-dark mx-2'))
-    end
+    array.push(link_to('All events', root_path(time_filter: 'all'), class: 'link-primary mx-2'))
+    array.push(link_to('Future Events', root_path(time_filter: 'future'), class: 'link-success mx-2'))
+    array.push(link_to('Past Events', root_path(time_filter: 'past'), class: 'link-dark mx-2'))
     array
   end
 

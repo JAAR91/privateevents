@@ -21,7 +21,7 @@ module UsersHelper
   def nav_bar_links
     array = []
     if logged_in?
-      array.push(link_to('My events', root_path(time_filter: 'all', user_id: current_user.id),
+      array.push(link_to('My events', user_path(current_user.id, time_filter: 'all'),
                          class: 'nav-link text-dark'))
     end
     if logged_in?
@@ -50,5 +50,16 @@ module UsersHelper
      'Government & Politics', 'Health & Wellness', 'Hobbies & Special Interest', 'Home & Lifestyle',
      'Music', 'Other', 'Performing & Visual Arts', 'Religion & Spirituality', 'School Activities',
      'Science & Technology', 'Seasonal & Holiday', 'Sports & Fitness', 'Travel & Outdoor']
+  end
+
+  def time_filter_links_user_events(_events)
+    array = []
+    array.push(link_to('All events', user_path(current_user.id, time_filter: 'all'),
+                       class: 'link-primary mx-2'))
+    array.push(link_to('Future Events', user_path(current_user.id, time_filter: 'future'),
+                       class: 'link-success mx-2'))
+    array.push(link_to('Past Events', user_path(current_user.id, time_filter: 'past'),
+                       class: 'link-dark mx-2'))
+    array
   end
 end

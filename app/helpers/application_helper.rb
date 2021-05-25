@@ -8,10 +8,9 @@ module ApplicationHelper
   end
 
   def alert_color(type)
-    
     return 'alert-success' if type == 'success'
     return 'alert-info' if type == 'notice'
     return 'alert-warning' if type == 'warning'
-    return 'alert-danger' if type == 'danger'    
+    return 'alert-danger' if type == 'danger'
   end
 end

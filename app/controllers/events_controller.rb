@@ -2,27 +2,20 @@ class EventsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if params[:user_id].nil?
-      @events = event_index_conditional(nil)
-    else
-      @user = User.find(params[:user_id])
-      @events = event_index_conditional(@user)
-    end
+    @events = event_index_conditional
   end
 
-  def event_index_conditional(user)
+  def event_index_conditional
     if params[:time_filter].nil? || params[:time_filter] == 'all'
-      return Event.all if user.nil?
-
-      @user.events
+      Event.all
     elsif params[:time_filter] == 'future'
-      show_upcoming(user)
+      Event.upcoming_events
     elsif params[:time_filter] == 'past'
-      show_past(user)
+      Event.past_events
     end
   end
 
-  def show_upcoming(user = nil)
+  def show_upcoming
     @upcoming_events = if user.nil?
                          Event.upcoming_events
                        else
