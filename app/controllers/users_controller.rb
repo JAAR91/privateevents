@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       redirect_to new_user_path
-      flash[:notice] = 'That username is already taken'
+      flash[:warning] = 'That username is already taken'
     end
   end
 

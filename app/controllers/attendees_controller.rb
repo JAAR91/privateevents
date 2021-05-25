@@ -17,11 +17,11 @@ class AttendeesController < ApplicationController
   def check_params(user)
     if params[:username] == ''
       redirect_to event_path(params[:event_id])
-      flash[:notice] = 'Please enter a username'
+      flash[:warning] = 'Please enter a username'
       return 0
     elsif user.nil?
       redirect_to event_path(params[:event_id])
-      flash[:notice] = 'That user does not exist'
+      flash[:warning] = 'That user does not exist'
       return 0
     end
     1
@@ -40,7 +40,7 @@ class AttendeesController < ApplicationController
     elsif @attendees.nil? || @attendees.status == 'canceled'
       @attendee = @event.attendees.create(status: 'pending', user_id: @user.id)
       redirect_to event_path(@event.id)
-      flash[:notice] = "Invitation sent to #{@user.username}"
+      flash[:success] = "Invitation sent to #{@user.username}"
     else
       redirect_to event_path(@event.id)
       flash[:notice] = 'That user already have an invitatin for this event'
@@ -58,10 +58,10 @@ class AttendeesController < ApplicationController
     if @attendee.update(status: attemdee_params)
       check_event(@attendee.event_id)
       redirect_to event_path(@attendee.event.id)
-      flash[:notice] = 'Invitation updated'
+      flash[:success] = 'Invitation updated'
     else
       redirect_to event_path(@attendee.event.id)
-      flash[:notice] = 'Invitation cant be updated'
+      flash[:warning] = 'Invitation cant be updated'
     end
   end
 

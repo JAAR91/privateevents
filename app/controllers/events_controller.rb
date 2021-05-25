@@ -49,10 +49,10 @@ class EventsController < ApplicationController
     @user = User.find(session[:user_id])
     @event = @user.events.new(event_params)
     if @event.save
-      flash[:notice] = 'Event Created!'
+      flash[:success] = 'Event Created!'
       redirect_to event_path(@event.id)
     else
-      flash.now[:notice] = 'Error, all fields need to be filled'
+      flash.now[:warning] = 'Error, all fields need to be filled'
       render :new
 
     end
@@ -79,8 +79,10 @@ class EventsController < ApplicationController
     @user = User.find(session[:user_id])
     @event = @user.events.find(params[:id])
     if @event.update(event_params)
+      flash[:success] = 'Event Updated!'
       redirect_to event_path(@event.id)
     else
+      flash.now[:warning] = 'Event Updated!'
       render :edit
     end
   end
