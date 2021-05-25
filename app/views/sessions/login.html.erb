@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-4">
+            <div>
+                <h2>Log In</h2>
+                <%= form_tag '/login' do |f| %>
+                    <%= label_tag :username, "User name:", class:'my-2' %>
+                    <%= text_field_tag (:username), "",class: "form-control" %> <br>
+                    <%= submit_tag 'Log In', class:"btn btn-primary" %>
+                    <%= link_to 'Register', new_user_path%>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+</div>

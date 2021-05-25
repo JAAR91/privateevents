@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-around border border-3 rounded p-4 bg-light my-1">
+    <p>You have an invitation to this event</p>
+     <%= form_with model: attendee, url: "#{attendee.event_id}/attendees/#{attendee.id}" do |f| %>
+        <div class="d-flex justify-content-center">
+            <%= f.text_field :id, value: attendee.id, type: :hidden %>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= f.submit 'Accept', class:'btn btn-success mx-2' %>
+            <%= f.submit 'Decline', class:'btn btn-warning' %>
+        </div> 
+    <% end %>
+</div>

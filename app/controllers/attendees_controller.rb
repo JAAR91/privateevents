@@ -1,0 +1,91 @@
+class AttendeesController < ApplicationController
+  before_action :authenticate_user!
+
+  def index
+    @user = User.find(params[:user_id])
+
+    case params[:time_spec]
+    when 'all'
+      @attendees = @user.attendees.order('created_at DESC')
+    when 'future'
+      @attendees = @user.attendees.all.joins(:event).where('date >= ?', Date.today).order('created_at DESC')
+    when 'past'
+      @attendees = @user.attendees.all.joins(:event).where('date < ?', Date.today).order('created_at DESC')
+    end
+  end
+
+  def check_params(user)
+    if params[:username] == ''
+      redirect_to event_path(params[:event_id])
+      flash[:warning] = 'Please enter a username'
+      return 0
+    elsif user.nil?
+      redirect_to event_path(params[:event_id])
+      flash[:warning] = 'That user does not exist'
+      return 0
+    end
+    1
+  end
+
+  def create
+    @user = User.find_by(username: params[:username])
+    return if check_params(@user).zero?
+
+    @event = Event.find(params[:event_id])
+    @attendees = @event.attendees.find_by(user_id: @user.id)
+    current_user = User.find(session[:user_id])
+    if params[:username] == current_user.username
+      redirect_to event_path(@event.id)
+      flash[:notice] = 'Thats yourself!!'
+    elsif @attendees.nil? || @attendees.status == 'canceled'
+      @attendee = @event.attendees.create(status: 'pending', user_id: @user.id)
+      redirect_to event_path(@event.id)
+      flash[:success] = "Invitation sent to #{@user.username}"
+    else
+      redirect_to event_path(@event.id)
+      flash[:notice] = 'That user already have an invitatin for this event'
+    end
+  end
+
+  def destroy
+    @attendee = Attendee.find(params[:id])
+    @attendee.destroy
+    redirect_to event_path(params[:event_id])
+  end
+
+  def update
+    @attendee = Attendee.find(params[:id])
+    if @attendee.update(status: attemdee_params)
+      check_event(@attendee.event_id)
+      redirect_to event_path(@attendee.event.id)
+      flash[:success] = 'Invitation updated'
+    else
+      redirect_to event_path(@attendee.event.id)
+      flash[:warning] = 'Invitation cant be updated'
+    end
+  end
+
+  private
+
+  def check_event(event_id)
+    @event = Event.find(event_id)
+    @attendees = @event.attendees
+    if @event.tpeople == @attendees.count
+      @attendees.each do |attendee|
+        attendee.status = 'canceledfull'
+      end
+    end
+    nil
+  end
+
+  def attemdee_params
+    case params[:commit]
+    when 'Accept'
+      'accepted'
+    when 'Decline'
+      'declined'
+    else
+      'canceled'
+    end
+  end
+end

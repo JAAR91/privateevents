@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-around border border-3 rounded p-4 bg-light my-1">
+    <p class="text-muted">You can cancel the inviation to his event, but once done this can not be reversed</p>
+     <%= form_with model: attendee, url: "#{attendee.event_id}/attendees/#{attendee.id}" do |f| %>
+        <div class="d-flex justify-content-center">
+            <%= f.text_field :id, value: attendee.id, type: :hidden %>
+            <%= f.submit 'Cancel', class:'btn btn-danger mx-2' %>
+        </div> 
+    <% end %>
+</div>

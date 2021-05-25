@@ -1,0 +1,17 @@
+<div class="border border-3 rounded-3 p-2 bg-light my-1">
+    <p class="mx-auto text-center">Invitations</p>
+
+    <%= form_tag '/invites' do |f| %>
+        <div class="row">
+            <div class="col-4">
+                <%= label_tag "Enter Username", nil,class: "form-label" %>
+            </div>
+            <div class="col-5">
+                <%= text_field_tag (:username), "",class: "form-control", size:"10x3" %>
+                <%= text_field_tag :event_id, value = @event.id, type:'hidden' %></div>
+            <div class="col-3">
+                <%= submit_tag 'Invite', class:"btn btn-primary" %>
+            </div>
+        </div>
+    <% end %>
+</div>

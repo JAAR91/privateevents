@@ -1,0 +1,12 @@
+<div class="border border-3 rounded-3 p-1 bg-light my-1">
+    <p class="mx-auto text-center"><%= attendees_title(@event) %></p>
+    <div class="list-group">
+        <% invites_checker(@event).order('status ASC').each do |attendees| %>
+            <div class="d-flex justify-content-around align-items-center list-group-item list-group-item-action <%= attendees_background_color(@event, attendees) %>">
+                <p class="m-0"><%= attendees.user.username %></p>
+                <p class="m-0"><%= attendees.status %></p>
+                <%=  attendees_del_link(@event, attendees) %>
+            </div>
+        <% end %>
+    </div>
+</div>

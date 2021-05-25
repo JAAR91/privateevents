@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+
+        </div>
+        <div class="col-6">
+            <div class="container py-2 my-1 text-center">
+                <%= event_post(current_user) %>
+            </div>
+            <div class="border border-3 rounded py-2 my-1 bg-light">
+                <div class="d-flex justify-content-around mb-3">
+                    <% time_filter_links(@events).each do |filter_links|%>
+                        <%= filter_links %>
+                    <%end%>
+                </div>
+                <div class="text-center text-muted">
+                    <%= when_events_zero(@events) %>
+                </div>
+            </div>
+            <% @events.order('date DESC').each do |event| %>
+                <div class="border border-3 rounded p-4 bg-light my-1">
+                    <div class="d-flex justify-content-center">
+                    <p class="text-uppercase text-center"> <%= event_title(logged_in?, event) %></p>
+                    <p class="<%= date_color_status(event) %>"><%= event_date_status(event) %></p>
+                    </div>
+                    <div class="shadown m-1 d-flex justify-content-between border-bottom">
+                        <p><%= attedees_count(event) %>/<%= event.tpeople%></p>
+                        <p class="text-muted"><%= event.date %></p>
+                    </div>
+                    <div class="container shadown">
+                        <p>Description:</p>
+                        <p class="text-break"><%= event.description %></p>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+</div>

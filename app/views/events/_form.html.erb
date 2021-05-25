@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center border-bottom">
+    <h1>New Events Page</h1>
+</div>
+<%= form_with model: [@user, @event] do |f| %>
+    <div class="my-3">
+        <%= f.label 'Name for the Event' %> <br>
+        <%= f.text_field :title, class:'w-100 form-control my-2' %>
+        <% @event.errors.full_messages_for(:title).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+    <div class="my-3">
+        <%= f.label :description %><br>
+        <%= f.text_area :description, size: "x5", class:'w-100 form-control my-2' %><br><br>
+        <% @event.errors.full_messages_for(:description).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+    <div class="d-flex justify-content-between my-3">
+        <div>
+            <%= f.label 'Max People'%><br>
+            <%= f.number_field :tpeople, in: 1..100, step: 1, value: 1, class:'form-control my-2' %>
+            <% @event.errors.full_messages_for(:tpeople).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= f.label 'Recurring Event?' %><br>
+            <%= f.select :frequency, freq, class:'form-control my-2' %>
+            <% @event.errors.full_messages_for(:frequency).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between my-3">  
+        <div> 
+            <%= f.label 'Event Type' %><br>
+            <%= f.select :eventtype, e_type, class:'form-control my-2' %>
+            <% @event.errors.full_messages_for(:eventtype).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div> 
+            <%= f.label 'Category' %><br>
+            <%= f.select :eventcategory, e_category, class:'form-control my-2' %>
+            <% @event.errors.full_messages_for(:eventcategory).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between my-3">
+        <div>
+            <%= f.label 'Date for the Event' %><br>
+            <%= f.datetime_local_field :date, class:'form-control' %>
+            <% @event.errors.full_messages_for(:date).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= f.label 'Location for the Event' %><br>
+            <%= f.text_field :location, class:'form-control' %>
+            <% @event.errors.full_messages_for(:location).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <%= f.submit butext, class:'btn btn-success' %>
+    </div>   
+<% end %>
