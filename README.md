@@ -1,11 +1,16 @@
-# README
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-### Micro Reddit
+### Private Events
 
-This project is an event page, with allows you to create events and invite other users, user can see all the events from the home page, but also a user can see its events from the link on the navbar "my events", also you can see all the events invitation you been sent using the link on the navbar "notifications", here you have access to all the events you have assisted and future events, you can filter the events on all the pages including the home page and "My events" page.
+This project is a calendar event page made with ruby on rails, that allows you to create events and select a date, name, set a limit of people for the event.
 
-You can modify and delete events and other users can see the event's more important info and also see who is attending the events, on the same event info page. Event owners can also remove invitations and also you cant submit a limited amount of people assisting the event so once the limit is reached no more invitations can be accepted.
+Also, you can send invitations to users, then each user can see their invitations on a notifications area.
+
+Once an event is created the owner can edit it, delete and have control over the people who have accepted the invitation or remove people from the list.
+
+Invited users can see a list of the people who will attend the event on the event description page and also can refuse or cancel an accepted invitation.
+
+Users can see all the events they have attended and upcoming events. These two options also apply to the events you create.
 
 ### Live Version
 
