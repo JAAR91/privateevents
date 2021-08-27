@@ -4,7 +4,7 @@
 
 This project is a calendar event page made with ruby on rails, that allows you to create events and select a date, name, set a limit of people for the event.
 
-Also, you can send invitations to users, then each user can see their invitations on a notifications area.
+Users can send invitations to other users, then each user can see their invitations on a notifications area.
 
 Once an event is created the owner can edit it, delete and have control over the people who have accepted the invitation or remove people from the list.
 
